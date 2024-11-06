@@ -1,8 +1,9 @@
 name: discord-meeting-reminder
 
 on:
+  workflow_dispatch:
   schedule:
-    - cron: '*/5 * * * *' 
+    - cron: '*/5 * * * *'    # runs every 5 minutes
 
 jobs:
   send-reminder:
@@ -13,5 +14,5 @@ jobs:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
         run: |
           curl -H "Content-Type: application/json" \
-          -d '{"content": "🔔 Reminder: Dev meeting starting soon!"}' \
+          -d '{"content": "🔔 testing every 5min!"}' \
           $DISCORD_WEBHOOK
