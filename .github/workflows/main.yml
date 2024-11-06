@@ -19,7 +19,7 @@ jobs:
           
           # calculate minutes until 9pm (21:00)
           target_hour=21
-          minutes_until=$((($target_hour - $current_hour) * 60 - $current_min))
+          minutes_until=$(( ((target_hour - current_hour + 24) % 24) * 60 - current_min ))
           
           # format message based on time remaining
           if [ $minutes_until -ge 120 ]; then
