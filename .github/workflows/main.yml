@@ -1,0 +1,35 @@
+name: discord-meeting-reminder
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '*/5 * * * *'    # runs every 5 minutes
+
+jobs:
+  send-reminder:
+    runs-on: ubuntu-latest
+    steps:
+      - name: calculate time and send message
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        run: |
+          # get current hour and minute (in EST)
+          current_hour=$(TZ="America/New_York" date +%H)
+          current_min=$(TZ="America/New_York" date +%M)
+          
+          # calculate minutes until 9pm (21:00)
+          target_hour=21
+          minutes_until=$(( ((target_hour - current_hour + 24) % 24) * 60 - current_min ))
+          
+          # format message based on time remaining
+          if [ $minutes_until -ge 120 ]; then
+            hours_until=$((minutes_until / 60))
+            message="DEV MEETING STARTING IN ${hours_until} HOURS!"
+          else
+            message="DEV MEETING STARTING IN ${minutes_until} MINS!"
+          fi
+          
+          # send to discord
+          curl -H "Content-Type: application/json" \
+          -d "{\"content\": \"<@&1277747166911139945> ${message} 🔔\"}" \
+          $DISCORD_WEBHOOK
