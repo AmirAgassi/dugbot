@@ -2,8 +2,6 @@ name: discord-meeting-reminder
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '*/5 * * * *'    # runs every 5 minutes
 
 jobs:
   send-reminder:
