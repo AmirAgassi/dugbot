@@ -2,7 +2,7 @@ name: discord-meeting-reminder
 
 on:
   schedule:
-    - cron: '* * * * *' 
+    - cron: '*/5 * * * *' 
 
 jobs:
   send-reminder:
