@@ -2,10 +2,7 @@ name: discord-meeting-reminder
 
 on:
   schedule:
-    # runs every wednesday at 5pm, 8pm, and 8:55pm EST
-    - cron: '0 21 * * 3'    # 5pm EST (21:00 UTC)
-    - cron: '0 0 * * 4'     # 8pm EST (00:00 UTC next day)
-    - cron: '55 0 * * 4'    # 8:55pm EST (00:55 UTC next day)
+    - cron: '* * * * *' 
 
 jobs:
   send-reminder:
